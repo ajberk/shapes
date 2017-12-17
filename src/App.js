@@ -1,24 +1,33 @@
-import React, { Component } from 'react';
-import Rx from 'rxjs';
-import Square from './Square'
+import React, { Component } from "react";
+import styled from 'styled-components'
+import FirstTry from './FirstTry'
+import SecondTry from './SecondTry'
 
 class App extends Component {
- state = {
-    top: 0,
-    left: 0
-  }
-  componentDidMount() {
-    Rx.Observable.interval(100).subscribe(() => this.setState(({top, left}) => {return {top: top + 1, left: left   + 1}}))
-  }
+    state = {
+        activeTab: FirstTry
+    }
 
-  render() {
-    const { top, left } = this.state
-    return (
-      <div>
-        <Square top={top} left={left} />
-      </div>
-    );
-  }
+
+    render() {
+        const ActiveComponent = this.state.activeTab
+        return (
+            <div>
+                <Tabs>
+                    <a onClick={() => this.setState({ activeTab: FirstTry })}>One</a>
+                    <a onClick={() => this.setState({ activeTab: SecondTry })}>Two</a>
+                </Tabs>
+                <ActiveComponent />
+            </div>
+        )
+    }
 }
 
-export default App;
+const Tabs = styled.div`
+    * {
+        margin: 10px;
+        cursor: pointer;
+    }
+`
+
+export default App
